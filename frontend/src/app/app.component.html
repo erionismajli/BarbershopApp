@@ -1,0 +1,40 @@
+<div class="h-full w-full overflow-auto" [style.background]="themeService.currentTheme() === 'dark' ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'">
+  <app-header (newBooking)="onNewBooking()"></app-header>
+  
+  <main class="max-w-5xl mx-auto px-6 py-8">
+    <app-stats [bookings]="bookings()"></app-stats>
+    
+    <app-filters 
+      [selectedBarber]="selectedBarberFilter()"
+      [selectedDateFilter]="selectedDateFilter()"
+      (filterChange)="onFilterChange($event.barber, $event.dateFilter)">
+    </app-filters>
+    
+    <app-booking-list
+      [bookings]="bookings()"
+      [isLoading]="isLoading()"
+      [barberFilter]="selectedBarberFilter()"
+      [dateFilter]="selectedDateFilter()"
+      (viewBooking)="onViewBooking($event)">
+    </app-booking-list>
+  </main>
+  
+  <app-booking-modal
+    [isOpen]="showBookingModal()"
+    (close)="showBookingModal.set(false)"
+    (bookingCreated)="onBookingCreated()">
+  </app-booking-modal>
+  
+  <app-view-modal
+    [isOpen]="showViewModal()"
+    [booking]="selectedBooking()"
+    (close)="showViewModal.set(false)"
+    (bookingDeleted)="onBookingDeleted()">
+  </app-view-modal>
+  
+  <app-toast
+    [message]="toastMessage()"
+    [type]="toastType()"
+    [show]="showToast()">
+  </app-toast>
+</div>

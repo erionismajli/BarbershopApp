@@ -1,0 +1,138 @@
+@if (isOpen()) {
+  <div class="fixed inset-0 z-50" (click)="onBackdropClick($event)">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
+      <div class="bg-slate-800 dark:bg-slate-800 bg-white dark:bg-slate-800 rounded-3xl w-full max-w-md my-8 fade-in border border-slate-700 dark:border-slate-700 border-gray-200 dark:border-slate-700">
+        <div class="p-6 border-b border-slate-700 dark:border-slate-700 border-gray-200 dark:border-slate-700">
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white dark:text-white text-gray-900 dark:text-white">New Appointment</h3>
+            <button (click)="onCancel()" class="text-slate-400 dark:text-slate-400 text-gray-600 dark:text-slate-400 hover:text-white dark:hover:text-white hover:text-gray-900 dark:hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <form (ngSubmit)="onSubmit()" class="p-6 space-y-4">
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Client Name *</span>
+            <input 
+              type="text" 
+              [(ngModel)]="formData().clientName"
+              [ngModelOptions]="{standalone: true}"
+              required 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500" 
+              placeholder="Enter client name">
+          </label>
+          
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Phone Number *</span>
+            <input 
+              type="tel" 
+              [(ngModel)]="formData().clientPhone"
+              [ngModelOptions]="{standalone: true}"
+              required 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500" 
+              placeholder="(555) 123-4567">
+          </label>
+          
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Date *</span>
+            <input 
+              type="date" 
+              [(ngModel)]="formData().date"
+              [ngModelOptions]="{standalone: true}"
+              [min]="minDate"
+              required 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+          </label>
+          
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Time *</span>
+            <select 
+              [(ngModel)]="formData().time"
+              [ngModelOptions]="{standalone: true}"
+              required 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+              <option value="">Select time</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="09:30">9:30 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="10:30">10:30 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="11:30">11:30 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="12:30">12:30 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="13:30">1:30 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="14:30">2:30 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="15:30">3:30 PM</option>
+              <option value="16:00">4:00 PM</option>
+              <option value="16:30">4:30 PM</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="17:30">5:30 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="18:30">6:30 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="19:30">7:30 PM</option>
+            </select>
+          </label>
+          
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Service *</span>
+            <select 
+              [(ngModel)]="formData().serviceType"
+              [ngModelOptions]="{standalone: true}"
+              required 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+              <option value="">Select service</option>
+              <option *ngFor="let service of services" [value]="service">{{ service }}</option>
+            </select>
+          </label>
+          
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Barber *</span>
+            <select 
+              [(ngModel)]="formData().barberName"
+              [ngModelOptions]="{standalone: true}"
+              required 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+              <option value="">Select barber</option>
+              <option *ngFor="let barber of barbers" [value]="barber">{{ barber }}</option>
+            </select>
+          </label>
+          
+          <label class="block">
+            <span class="text-slate-300 dark:text-slate-300 text-gray-700 dark:text-slate-300 text-sm font-medium mb-2 block">Notes</span>
+            <textarea 
+              [(ngModel)]="formData().notes"
+              [ngModelOptions]="{standalone: true}"
+              rows="2" 
+              class="w-full bg-slate-700 dark:bg-slate-700 bg-gray-100 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-4 py-3 rounded-xl border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none" 
+              placeholder="Special requests..."></textarea>
+          </label>
+          
+          <div class="flex gap-3 pt-4">
+            <button 
+              type="button" 
+              (click)="onCancel()"
+              class="flex-1 bg-slate-700 dark:bg-slate-700 bg-gray-200 dark:bg-slate-700 text-white dark:text-white text-gray-900 dark:text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-600 dark:hover:bg-slate-600 hover:bg-gray-300 dark:hover:bg-slate-600 transition-all border border-slate-600 dark:border-slate-600 border-gray-300 dark:border-slate-600">
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              [disabled]="isLoading()"
+              class="flex-1 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-cyan-600 hover:to-cyan-700 transition-all flex items-center justify-center gap-2 glow-effect disabled:opacity-50">
+              <span>Book Now</span>
+              @if (isLoading()) {
+                <div class="spinner"></div>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
